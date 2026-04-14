@@ -4,7 +4,7 @@
  
  ### TUGAS 1 : PROGRAM PERTAMA KOTLIN
  
-![Clone Repository](kotlin1.png)
+![Clone Repository](image/kotlin1.png)
  
  Penjelasan :Fungsi 'main' adalah titik awal atau pintu masuk dari setiap program Kotlin.
  Komputer akan mencari fungsi 'main' ini pertama kali saat program dijalankan.
@@ -13,8 +13,8 @@
  
  ## TUGAS 2 : MEMBUAT DAN MENGGUNAKAN VARIABEL
 
-![Clone Repository](kotlin2.png)
-![Clone Repository](output2.png)
+![Clone Repository](image/kotlin2.png)
+![Clone Repository](image/output2.png)
 
  Penjelasan : 
  Variabel adalah tempat untuk menyimpan data. Di Kotlin ada dua jenis:
@@ -24,8 +24,8 @@
  
 ## TUGAS 3 : MEMBUAT DAN MENGGUNAKAN FUNGSI
 
-![Clone Repository](kotlin3.png)
-![Clone Repository](output3.png)
+![Clone Repository](image/kotlin3.png)
+![Clone Repository](image/output3.png)
 
  Penjelasan :
  Fungsi (fun) digunakan untuk membungkus blok kode agar bisa digunakan berulang kali
@@ -37,8 +37,8 @@
 
 ## TUGAS 4 : SOAL LATIHAN DASAR-DASAR KOTLIN
 
-![Clone Repository](kotlin4.png)
-![Clone Repository](output4.png)
+![Clone Repository](image/kotlin4.png)
+![Clone Repository](image/output4.png)
 
  Penjelasan:
  Ini adalah program gabungan yang menerapkan fungsi, variabel, dan percabangan logika untuk mensimulasikan pengecekan estimasi waktu pengiriman pesanan.
