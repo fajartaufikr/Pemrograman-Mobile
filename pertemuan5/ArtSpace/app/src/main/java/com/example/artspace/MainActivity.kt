@@ -35,9 +35,9 @@ fun ArtSpaceApp() {
 
     // Logika penentuan gambar dan teks berdasarkan angka 'urutanKarya'
     val gambarRes = when (urutanKarya) {
-        1 -> R.drawable.bmw   // Ganti dengan nama gambar ke-1 Anda
-        2 -> R.drawable.nissan    // Ganti dengan nama gambar ke-2 Anda
-        else -> R.drawable.supra // Ganti dengan nama gambar ke-3 Anda
+        1 -> R.drawable.bmw
+        2 -> R.drawable.nissan    
+        else -> R.drawable.supra
     }
 
     val asalNegara = when (urutanKarya) {
@@ -58,7 +58,7 @@ fun ArtSpaceApp() {
         else -> "Owner Java & Putri"
     }
 
-    // TATA LETAK UTAMA (KARDUS BESAR)
+    // TATA LETAK UTAMA
     Column(
         modifier = Modifier
             .fillMaxSize()
