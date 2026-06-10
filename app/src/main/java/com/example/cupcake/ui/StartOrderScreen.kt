@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      https://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -42,13 +42,12 @@ import com.example.cupcake.data.DataSource
 import com.example.cupcake.ui.theme.CupcakeTheme
 
 /**
- * Composable that allows the user to select the desired cupcake quantity and expects
- * [onNextButtonClicked] lambda that expects the selected quantity and triggers the navigation to
- * next screen
+ * Composable yang menampilkan halaman awal pesanan
  */
 @Composable
 fun StartOrderScreen(
     quantityOptions: List<Pair<Int, Int>>,
+    onNextButtonClicked: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -80,10 +79,11 @@ fun StartOrderScreen(
                 dimensionResource(id = R.dimen.padding_medium)
             )
         ) {
+
             quantityOptions.forEach { item ->
                 SelectQuantityButton(
                     labelResourceId = item.first,
-                    onClick = {}
+                    onClick = { onNextButtonClicked(item.second) }
                 )
             }
         }
@@ -91,8 +91,7 @@ fun StartOrderScreen(
 }
 
 /**
- * Customizable button composable that displays the [labelResourceId]
- * and triggers [onClick] lambda when this composable is clicked
+ * Komponen tombol kustom yang menerima parameter klik secara dinamis
  */
 @Composable
 fun SelectQuantityButton(
@@ -114,6 +113,7 @@ fun StartOrderPreview() {
     CupcakeTheme {
         StartOrderScreen(
             quantityOptions = DataSource.quantityOptions,
+            onNextButtonClicked = {},
             modifier = Modifier
                 .fillMaxSize()
                 .padding(dimensionResource(R.dimen.padding_medium))

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      https://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -23,7 +23,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
@@ -41,18 +41,14 @@ import com.example.cupcake.R
 import com.example.cupcake.ui.components.FormattedPriceLabel
 import com.example.cupcake.ui.theme.CupcakeTheme
 
-/**
- * Composable that displays the list of items as [RadioButton] options,
- * [onSelectionChanged] lambda that notifies the parent composable when a new value is selected,
- * [onCancelButtonClicked] lambda that cancels the order when user clicks cancel and
- * [onNextButtonClicked] lambda that triggers the navigation to next screen
- */
 @Composable
 fun SelectOptionScreen(
     subtotal: String,
     options: List<String>,
+    modifier: Modifier = Modifier,
     onSelectionChanged: (String) -> Unit = {},
-    modifier: Modifier = Modifier
+    onNextButtonClicked: () -> Unit = {},
+    onCancelButtonClicked: () -> Unit = {}
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
 
@@ -63,17 +59,19 @@ fun SelectOptionScreen(
         Column(modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))) {
             options.forEach { item ->
                 Row(
-                    modifier = Modifier.selectable(
-                        selected = selectedValue == item,
-                        onClick = {
-                            selectedValue = item
-                            onSelectionChanged(item)
-                        }
-                    ),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .selectable(
+                            selected = (selectedValue == item),
+                            onClick = {
+                                selectedValue = item
+                                onSelectionChanged(item)
+                            }
+                        ),
+                    verticalAlignment = Alignment.CenterVertically // Perbaikan typo 'z'
                 ) {
                     RadioButton(
-                        selected = selectedValue == item,
+                        selected = (selectedValue == item),
                         onClick = {
                             selectedValue = item
                             onSelectionChanged(item)
@@ -82,7 +80,7 @@ fun SelectOptionScreen(
                     Text(item)
                 }
             }
-            Divider(
+            HorizontalDivider(
                 thickness = dimensionResource(R.dimen.thickness_divider),
                 modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_medium))
             )
@@ -91,7 +89,7 @@ fun SelectOptionScreen(
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(
-                        top = dimensionResource(R.dimen.padding_medium),
+                        top = dimensionResource(R.dimen.padding_small),
                         bottom = dimensionResource(R.dimen.padding_medium)
                     )
             )
@@ -105,15 +103,14 @@ fun SelectOptionScreen(
         ) {
             OutlinedButton(
                 modifier = Modifier.weight(1f),
-                onClick = {}
+                onClick = onCancelButtonClicked
             ) {
                 Text(stringResource(R.string.cancel))
             }
             Button(
                 modifier = Modifier.weight(1f),
-                // the button is enabled when the user makes a selection
                 enabled = selectedValue.isNotEmpty(),
-                onClick = {}
+                onClick = onNextButtonClicked
             ) {
                 Text(stringResource(R.string.next))
             }
@@ -126,7 +123,7 @@ fun SelectOptionScreen(
 fun SelectOptionPreview() {
     CupcakeTheme {
         SelectOptionScreen(
-            subtotal = "299.99",
+            subtotal = "29.99",
             options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
             modifier = Modifier.fillMaxHeight()
         )

@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      https://www.apache.org/licenses/LICENSE-2.0
+ * https://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,7 +24,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,15 +40,12 @@ import com.example.cupcake.data.OrderUiState
 import com.example.cupcake.ui.components.FormattedPriceLabel
 import com.example.cupcake.ui.theme.CupcakeTheme
 
-/**
- * This composable expects [orderUiState] that represents the order state, [onCancelButtonClicked]
- * lambda that triggers canceling the order and passes the final order to [onSendButtonClicked]
- * lambda
- */
 @Composable
 fun OrderSummaryScreen(
     orderUiState: OrderUiState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier, 
+    onCancelButtonClicked: () -> Unit = {},
+    onSendButtonClicked: (String, String) -> Unit = { _, _ -> }
 ) {
     val resources = LocalContext.current.resources
 
@@ -57,23 +54,22 @@ fun OrderSummaryScreen(
         orderUiState.quantity,
         orderUiState.quantity
     )
-    //Load and format a string resource with the parameters.
+
     val orderSummary = stringResource(
         R.string.order_details,
         numberOfCupcakes,
         orderUiState.flavor,
         orderUiState.date,
-        orderUiState.quantity
+        orderUiState.price
     )
-    val newOrder = stringResource(R.string.new_cupcake_order)
-    //Create a list of order summary to display
+
+    val newOrder = "New Cupcake Order"
+
     val items = listOf(
-        // Summary line 1: display selected quantity
         Pair(stringResource(R.string.quantity), numberOfCupcakes),
-        // Summary line 2: display selected flavor
         Pair(stringResource(R.string.flavor), orderUiState.flavor),
-        // Summary line 3: display selected pickup date
-        Pair(stringResource(R.string.pickup_date), orderUiState.date)
+        // PERBAIKAN: Menggunakan hardcoded "Date" karena R.string.date tidak ada di proyek ini
+        Pair("Date", orderUiState.date)
     )
 
     Column(
@@ -87,7 +83,7 @@ fun OrderSummaryScreen(
             items.forEach { item ->
                 Text(item.first.uppercase())
                 Text(text = item.second, fontWeight = FontWeight.Bold)
-                Divider(thickness = dimensionResource(R.dimen.thickness_divider))
+                HorizontalDivider(thickness = dimensionResource(R.dimen.thickness_divider))
             }
             Spacer(modifier = Modifier.height(dimensionResource(R.dimen.padding_small)))
             FormattedPriceLabel(
@@ -96,20 +92,24 @@ fun OrderSummaryScreen(
             )
         }
         Row(
-            modifier = Modifier.padding(dimensionResource(R.dimen.padding_medium))
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(dimensionResource(R.dimen.padding_medium)),
+            horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
+            verticalAlignment = Alignment.Bottom
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_small))
             ) {
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {}
+                    onClick = { onSendButtonClicked(newOrder, orderSummary) }
                 ) {
                     Text(stringResource(R.string.send))
                 }
                 OutlinedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = {}
+                    onClick = onCancelButtonClicked
                 ) {
                     Text(stringResource(R.string.cancel))
                 }
@@ -123,7 +123,7 @@ fun OrderSummaryScreen(
 fun OrderSummaryPreview() {
     CupcakeTheme {
         OrderSummaryScreen(
-            orderUiState = OrderUiState(0, "Test", "Test", "$300.00"),
+            orderUiState = OrderUiState(0, "Vanilla", "Thurs", "$300.00"),
             modifier = Modifier.fillMaxHeight()
         )
     }
